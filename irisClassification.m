@@ -22,7 +22,7 @@ function varargout = irisClassification(varargin)
 
 % Edit the above text to modify the response to help irisClassification
 
-% Last Modified by GUIDE v2.5 16-Mar-2023 11:50:15
+% Last Modified by GUIDE v2.5 20-Mar-2023 22:57:00
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -184,10 +184,6 @@ end
 
 % --- Executes on button press in class.
 function class_Callback(hObject, eventdata, handles)
-% hObject    handle to class (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
 % mengambil data dari inputan
 SL = str2double(get(handles.SL, 'string'));
 SW = str2double(get(handles.SW, 'string'));
@@ -214,35 +210,29 @@ opts.SelectedVariableNames = (6);
 % memanggil dan membaca matriks
 group = readmatrix('iris.csv', opts); 
 
-% meng-klaz
+% membuat sebuah objek klasifikasi dengan algoritma KNN
 class = fitcknn(training, group, 'NumNeighbor', 3);
 
+% menangkap result
 classificationResult = predict(class, sample);
 
 
-% set(mau di taruh dimana, tipedatanya apa, apa yang di taruh)
+% menyimpan result ke handles.result
 set(handles.result, 'string', classificationResult) ;
 
-
-%-------------------------------------------------------------------
-
+% membaca file gambar terlebih dahulu
 gambar = imread('Iris-virginica.jpg');
 
-
+% menampilkan gambarnya
 imshow(gambar, 'Parent', handles.axes1);
     
 
 
+% --- Executes on button press in reset.
+function reset_Callback(hObject, eventdata, handles)
+% hObject    handle to reset (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
-
-
-
-
-
-
-
-
-
-
-
-
+% cara menghapus data di table
+set(handles.table, 'data','');
